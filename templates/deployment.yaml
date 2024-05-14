@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world
+  namespace: test-ext-modules
+  {{- include "helm_lib_module_labels" (list . (dict "app" "hello-world")) | nindent 2 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "hello-world.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "hello-world.labels" . | nindent 8 }}
+    spec:
+      imagePullSecrets:
+        - name: registrysecret
+      containers:
+      - name: {{ .Chart.Name }}
+        image: {{ include "helm_lib_module_image" (list . "helloWorld") }}
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: http
+        resources:
+          {{- toYaml .Values.helloWorld.resources | nindent 10 }}
+
