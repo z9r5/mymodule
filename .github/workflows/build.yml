@@ -21,6 +21,6 @@ jobs:
 
       - uses: deckhouse/modules-actions/build@main
         with:
-          module_source: ghcr.io/${{ github.actor }}
+          module_source: ghcr.io/${{ github.actor }}/modules
           module_name: mymodule
           module_tag: ${{ github.ref_name }}
