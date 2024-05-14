@@ -1,3 +1,5 @@
+name: Build and push for dev
+
 on: [push]
 
 jobs:
@@ -15,6 +17,6 @@ jobs:
 
       - uses: deckhouse/modules-actions/build@main
         with:
-          module_source: ghcr.io/${{ github.actor }}/${{ github.repository }}
+          module_source: ghcr.io/${{ github.actor }}
           module_name: mymodule
-          module_tag: ${{ github.ref_name }}
+          module_tag: ${{ github.ref }}
