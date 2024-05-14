@@ -7,14 +7,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: deckhouse/modules-actions/setup@v1
+      - uses: deckhouse/modules-actions/setup@main
         with:
           registry: ghcr.io
           registry_login: ${{ github.actor }}
           registry_password: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: deckhouse/modules-actions/build@v1
+      - uses: deckhouse/modules-actions/build@main
         with:
-          module_source: registry.deckhouse.io/deckhouse/ce/modules
-          module_name: everything-controller
+          module_source: ghcr.io/${{ github.actor }}/${{ github.repository }}
+          module_name: mymodule
           module_tag: ${{ github.ref_name }}
