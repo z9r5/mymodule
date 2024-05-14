@@ -2,6 +2,10 @@ name: Build and push for dev
 
 on: [push]
 
+# @TODO. Looks not good
+env:
+  CI_COMMIT_REF_NAME: ${{ github.ref_name }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,4 +23,4 @@ jobs:
         with:
           module_source: ghcr.io/${{ github.actor }}
           module_name: mymodule
-          module_tag: ${{ github.ref }}
+          module_tag: ${{ github.ref_name }}
