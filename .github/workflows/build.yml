@@ -1,0 +1,24 @@
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build and Push images
+    steps:
+      - uses: actions/checkout@v4
+      - uses: deckhouse/modules-actions/setup@v1
+        with:
+          registry: ghcr.io
+          registry_login: ${{ github.actor }}
+          registry_password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install werf
+        uses: werf/actions/install@v2
+        with:
+          channel: ea
+
+      - uses: deckhouse/modules-actions/build@v1
+        with:
+          module_source: registry.deckhouse.io/deckhouse/ce/modules
+          module_name: everything-controller
+          module_tag: ${{ github.ref_name }}
