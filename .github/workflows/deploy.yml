@@ -35,5 +35,5 @@ jobs:
         with:
           module_source: ghcr.io/${{ github.actor }}/modules
           module_name: mymodule
-          module_tag: ${{ github.ref_name }}
+          module_tag: ${{ github.event.inputs.tag }}
           release_channel: ${{ github.event.inputs.release_channel }}
