@@ -31,9 +31,13 @@ jobs:
           registry_login: ${{ github.actor }}
           registry_password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Get the repository name
+        id: repo_name
+        run: echo "REPO_NAME=$(echo '${{ github.repository }}' | cut -d'/' -f2)" >> $GITHUB_OUTPUT
+
       - uses: deckhouse/modules-actions/deploy@main
         with:
           module_source: ghcr.io/${{ github.actor }}/modules
-          module_name: mymodule
+          module_name: ${{ steps.repo_name.outputs.REPO_NAME }}
           module_tag: ${{ github.event.inputs.tag }}
           release_channel: ${{ github.event.inputs.release_channel }}
